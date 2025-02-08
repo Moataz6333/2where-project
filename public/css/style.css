@@ -1,0 +1,13 @@
+.photosContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.citiesContainer{
+    gap: 20px;
+}
+.create-tradition{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
