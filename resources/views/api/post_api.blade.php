@@ -86,7 +86,7 @@
 
         <td>users request for a Hotels</td>
 
-        <td> user_id , title,  ,rate , features , price , address , link ,postPhoto(url) <br>  , images[array of urls]</td>
+        <td> user_id , title,  ,rate , features , price , address , link ,postPhoto(photo) <br>  , images[array of photos]</td>
 
         <td>
            hotel , message
@@ -246,6 +246,66 @@
 
         <td> <input type="text" value="{{ url('/api/deleteAlbum') }}" id="link15" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(15)">copy</button></td>
+      </tr>
+      <tr class="table-warning">
+        <th scope="row">/addBlog</th>
+
+        <td>create blogs </td>
+
+        <td>  token , description(op) ,images[] (op) ,</td>
+
+        <td>
+          message ,blog
+        </td>
+
+
+        <td> <input type="text" value="{{ url('/api/addBlog') }}" id="link16" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(16)">copy</button></td>
+      </tr>
+      <tr class="table-warning">
+        <th scope="row">/editBlog</th>
+
+        <td>edit blog </td>
+
+        <td>  token ,blog_id , description(op) ,images[] (op) ,</td>
+
+        <td>
+          message ,blog
+        </td>
+
+
+        <td> <input type="text" value="{{ url('/api/editBlog') }}" id="link17" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(17)">copy</button></td>
+      </tr>
+      <tr class="table-warning">
+        <th scope="row">/delBlog/{id}</th>
+
+        <td>delete blog with id</td>
+
+        <td>  token , id of the blog (in the url)</td>
+
+        <td>
+          message 
+        </td>
+
+
+        <td> <input type="text" value="{{ url('/api/delBlog/{id}') }}" id="link18" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(18)">copy</button></td>
+      </tr>
+      <tr class="table-warning">
+        <th scope="row">/delBlogPhoto</th>
+
+        <td>delete photo in a blog</td>
+
+        <td>  token , photo_id</td>
+
+        <td>
+          message 
+        </td>
+
+
+        <td> <input type="text" value="{{ url('/api/delBlogPhoto') }}" id="link19" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(19)">copy</button></td>
       </tr>
       
      

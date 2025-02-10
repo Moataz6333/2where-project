@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\User;
 use App\Models\TourGuide;
+use App\Models\Blog;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -41,5 +42,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('TourGuideAccepted',function(User $user ,TourGuide $tourGuide){
                 return  $tourGuide->accepted  ;
         });
+
+        Gate::define('OwnBlog',function (User $user, Blog $blog) {
+                return $user->tourGuide->id === $blog->tour_guide_id;
+            });
     }
 }

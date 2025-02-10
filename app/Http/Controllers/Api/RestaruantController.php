@@ -18,9 +18,9 @@ class RestaruantController extends Controller
         $validator = Validator::make($request->all(), [
             'title'=>['required'],
             'address'=>['required'],
-            'postPhoto' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'menu.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'postPhoto' =>  ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
+            'images.*' =>  [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
+            'menu.*' =>  [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
 
             'user_id'=>['required','exists:users,id'],
         ]);

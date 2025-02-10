@@ -37,7 +37,9 @@ class TourGideController extends Controller
             'about' => ['required','min:10' ,'max:300' ],
             'languages' => ['required', 'min:3', 'max:300'],
             'experience'=>['required','min:3' , 'max:100'],
-            'licence'=>['required|image|mimes:jpeg,png,jpg,gif|max:2048']
+            'licence'=>['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
+            'national_id'=>['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048']
+            
         ]);
 
         if ($validator->fails()) {
@@ -74,16 +76,43 @@ class TourGideController extends Controller
            
            
             $tourGuide->licence=$relativePath;
-            $tourGuide->save();
-    
-            return response()->json([
-                'message' => 'The Request Sended Successfully! , Wait For Acception',
-                'user'=>$tourGuide,
-            ], 200); 
+         
         
+        }else{
+            return response()->json([
+                'message' => 'Some errors happened',
+            ], 422);
         }
+        if ($request->hasFile('national_id')) {
+
+            $mainPhoto = $request->file('national_id');
+            $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/images/tour-guides';
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            $fileName =  $mainPhoto->getClientOriginalName();
+
+            $mainPhoto->move($destinationPath, $fileName);
+            $relativePath = '/images/tour-guides/' . $fileName;  
+    
+           
+           
+            $tourGuide->national_id=$relativePath;
+    
+           
+        
+        }else{
+            return response()->json([
+                'message' => 'Some errors happened',
+            ], 422);
+        }
+        
+        $tourGuide->save();
+
         return response()->json([
-            'message' => 'Some errors happened',
-        ], 422);
+            'message' => 'The Request Sended Successfully! , Wait For Acception',
+            'user'=>$tourGuide,
+        ], 200); 
+       
     }
 }

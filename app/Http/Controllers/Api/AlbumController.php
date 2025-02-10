@@ -19,8 +19,8 @@ class AlbumController extends Controller
             Gate::authorize('TourGuideAccepted',TourGuide::where('user_id',auth()->user()->id)->first());
             $validator = Validator::make($request->all(), [
                 'title'=>['required','min:3' , 'max:255'],
-                'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-
+                'images'=>['required','array'],
+                'images.*' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048']
                
             ]);
     
@@ -35,6 +35,7 @@ class AlbumController extends Controller
                 $album->title=$request->title;
                 $album->tourGuide_id = $tourGuide->id;
                 $album->save();
+
                 if ($request->hasFile('images')) {
                     // $mainPhoto = $request->file('image');
                       
@@ -57,6 +58,7 @@ class AlbumController extends Controller
                     }
               return response()->json([
                "message"=>"album created SuccessFully",
+             
             ],200);
         }
         
@@ -72,7 +74,7 @@ class AlbumController extends Controller
         Gate::authorize('TourGuideAccepted',TourGuide::where('user_id',auth()->user()->id)->first());
         $validator = Validator::make($request->all(), [
             'album_id'=>['required'],
-            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' =>  ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
            
         ]);
 

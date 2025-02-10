@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\RestaruantController;
 use App\Http\Controllers\Api\HotelController;
 use App\Http\Controllers\Api\TourGideController;
 use App\Http\Controllers\Api\AlbumController;
+use App\Http\Controllers\Api\BlogController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -86,11 +87,20 @@ Route::post('deletePhoto', [AlbumController::class,'deletePhoto'])->middleware('
 Route::post('deleteAlbum', [AlbumController::class,'deleteAlbum'])->middleware('auth:sanctum');
 
 
+// Blogs (private)
+Route::post('addBlog',[BlogController::class,'store'])->middleware('auth:sanctum');
+Route::get('/myBlogs',[BlogController::class,'index'])->middleware('auth:sanctum');
+Route::get('/myBlogs/{id}',[BlogController::class,'show'])->middleware('auth:sanctum');
+Route::post('/editBlog',[BlogController::class,'update'])->middleware('auth:sanctum');
+Route::post('/delBlog/{id}',[BlogController::class,'destroy'])->middleware('auth:sanctum');
+Route::post('/delBlogPhoto',[BlogController::class,'delPhoto'])->middleware('auth:sanctum');
 
 
+
+// test uploading photo
 Route::post('/upload', function (Request $request) {
     $validator = Validator::make($request->all(), [
-        'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'images.*' =>  ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
     ]);
 
     if ($validator->fails()) {

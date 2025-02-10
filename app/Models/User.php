@@ -59,4 +59,7 @@ class User extends Authenticatable
     public function hotels(){
         return $this->hasMany(Hotel::class);
     }
+    public function tourGuide(){
+        return $this->hasOne(TourGuide::class,'user_id');
+    }
 }

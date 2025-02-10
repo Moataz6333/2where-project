@@ -218,7 +218,7 @@ public function login()
     public function profilePic(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' =>  ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
            
         ]);
     

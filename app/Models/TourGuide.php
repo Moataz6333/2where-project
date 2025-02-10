@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Album;
+use App\Models\Blog;
 
 class TourGuide extends Model
 {
@@ -18,6 +19,7 @@ class TourGuide extends Model
         'experience',
         'accepted',
         'licence',
+        'national_id',
         'user_id',
     ];
 
@@ -27,4 +29,8 @@ class TourGuide extends Model
     public function albums() {
         return $this->hasMany(Album::class,"tourGuide_id");
     }
+    public function blogs() {
+        return $this->hasMany(Blog::class);
+    }
+
 }

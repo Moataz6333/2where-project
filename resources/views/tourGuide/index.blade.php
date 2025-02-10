@@ -15,7 +15,8 @@
        
         <div class="border border-info my-2 p-2 bg-white rounded row">
                 <div class="licence col-4" >
-                    <img src="{{$tourGuide->licence}}" alt="Not Found" class="w-100 h-100">
+                    <img src="{{$tourGuide->licence}}" alt="Not Found" class="w-100 ">
+                    <img src="{{$tourGuide->national_id}}" alt="Not Found" class="w-100 ">
                 </div>
                 <div class="col-8 position-relative">
                         <h5>{{$tourGuide->user->name}}</h5>
@@ -33,6 +34,8 @@
                             <a href="{{route('tourGuide.accept',$tourGuide->id)}}" class="btn btn-success">Accept</a>
                         </div>
                 </div>
+
+   
         </div>
         @endforeach
 
