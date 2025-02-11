@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\User;
 use App\Models\TourGuide;
 use App\Models\Blog;
+use App\Models\Comment;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('OwnBlog',function (User $user, Blog $blog) {
                 return $user->tourGuide->id === $blog->tour_guide_id;
+            });
+        Gate::define('OwnComment',function (User $user, Comment $comment) {
+                return $user->id === $comment->user_id;
             });
     }
 }

@@ -89,12 +89,16 @@ Route::post('deleteAlbum', [AlbumController::class,'deleteAlbum'])->middleware('
 
 // Blogs (private)
 Route::post('addBlog',[BlogController::class,'store'])->middleware('auth:sanctum');
-Route::get('/myBlogs',[BlogController::class,'index'])->middleware('auth:sanctum');
-Route::get('/myBlogs/{id}',[BlogController::class,'show'])->middleware('auth:sanctum');
+Route::get('/blogs/{id}',[BlogController::class,'index']);
+Route::get('/blog/{id}',[BlogController::class,'show']);
 Route::post('/editBlog',[BlogController::class,'update'])->middleware('auth:sanctum');
 Route::post('/delBlog/{id}',[BlogController::class,'destroy'])->middleware('auth:sanctum');
 Route::post('/delBlogPhoto',[BlogController::class,'delPhoto'])->middleware('auth:sanctum');
-
+// like
+Route::post('/like',[BlogController::class,'like'])->middleware('auth:sanctum');
+// comment
+Route::post('/comment',[BlogController::class,'comment'])->middleware('auth:sanctum');
+Route::post('/delComment',[BlogController::class,'deleteComment'])->middleware('auth:sanctum');
 
 
 // test uploading photo

@@ -8,29 +8,22 @@ use App\Models\User;
 use App\Models\TourGuide;
 use App\Models\Photo;
 use App\Models\Blog;
+use App\Models\Like;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\BlogResource;
 
 class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //returns my own blogs
-        Gate::authorize('isTourGuide');
-        $tourGuide =TourGuide::where('user_id',auth()->user()->id)->first();
-        Gate::authorize('TourGuideAccepted',$tourGuide);
-        $blogs =[];
-        foreach ($tourGuide->blogs as $blog) {
-            array_push($blogs,[
-                'id'=>$blog->id,
-                'description'=>$blog->description,
-                'created_at'=>$blog->created_at,
-                'photos'=>$blog->photos
-            ]);
-        }
+        // return blogs with tourguide with id
+       
+       $blogs =BlogResource::collection(TourGuide::findOrFail($id)->blogs);
         return response()->json([
            
             "blogs"=>$blogs
@@ -90,10 +83,8 @@ class BlogController extends Controller
                 }
                 return response()->json([
                  "message"=>"blog created SuccessFully",
-                 'id'=>$blog->id,
-                 'description'=>$blog->description,
-                 'created_at'=>$blog->created_at,
-                 'photos'=>$blog->photos
+                 'blog'=>new BlogResource($blog),
+                 
                
                   ],200);
             }
@@ -110,24 +101,15 @@ class BlogController extends Controller
     
     public function show(string $id)
     {
-        Gate::authorize('isTourGuide');
-        $tourGuide =TourGuide::where('user_id',auth()->user()->id)->first();
-        Gate::authorize('TourGuideAccepted',$tourGuide);
+        
         $blog = Blog::findOrFail($id);
-        if($blog->tour_guide_id === $tourGuide->id){
+       
            return response()->json([
-            'id'=>$blog->id,
-            'description'=>$blog->description,
-            'created_at'=>$blog->created_at,
-            'photos'=>$blog->photos
+            'blog'=>new BlogResource($blog)
 
            ]
             , 200);
-        }else{
-            return response()->json([
-                "message"=>"not authorized"
-            ], 403);
-        }
+        
     }
 
    
@@ -187,11 +169,7 @@ class BlogController extends Controller
                       }
                   }
                   return response()->json([
-                   "message"=>"blog Updated SuccessFully",
-                   'id'=>$blog->id,
-                   'description'=>$blog->description,
-                   'created_at'=>$blog->created_at,
-                   'photos'=>$blog->photos
+                    'blog'=>new BlogResource($blog)
                  
                     ],201);
               }
@@ -251,10 +229,85 @@ class BlogController extends Controller
         $photo->delete();
         return response()->json([
             'message' => 'photo deleted successfully!',
-            'id'=>$blog->id,
-            'description'=>$blog->description,
-            'created_at'=>$blog->created_at,
-            'photos'=>$blog->photos
+            'blog'=>new BlogResource($blog)
         ], 200);
+    }
+
+    // like a blog
+    public function like(Request $request){
+        $validator = Validator::make($request->all(), [
+            'blog_id'=>['required','exists:blogs,id'],
+             
+          ]);
+  
+          if ($validator->fails()) {
+              return response()->json([
+                  'message' => 'Validation errors',
+                  'errors' => $validator->errors(),  // Return validation errors
+              ], 422);  // 422 Unprocessable Entity
+          }
+              if (Like::where('blog_id',$request->blog_id)->where('user_id',auth()->user()->id)->first()) {
+                Like::where('blog_id',$request->blog_id)->where('user_id',auth()->user()->id)->first()->delete();
+                return response()->json([
+                    "message"=> "unliked successfully!"
+                ], 200);
+              } else {
+                $like =new Like();
+                $like->user_id=auth()->user()->id;
+                $like->blog_id =$request->blog_id;
+                $like->save();
+                return response()->json([
+                    "message"=> "liked successfully!"
+                ], 200);
+              }
+              
+
+    }
+    // comment
+    public function comment(Request $request){
+        $validator = Validator::make($request->all(), [
+            'blog_id'=>['required','exists:blogs,id'],
+            'comment'=>['required','min:1','max:400'],
+             
+          ]);
+  
+          if ($validator->fails()) {
+              return response()->json([
+                  'message' => 'Validation errors',
+                  'errors' => $validator->errors(),  // Return validation errors
+              ], 422);  // 422 Unprocessable Entity
+          }
+
+          $comment =new Comment();
+          $comment->user_id =auth()->user()->id;
+          $comment->blog_id =$request->blog_id;
+          $comment->comment =$request->comment;
+          $comment->save();
+
+          return response()->json([
+            "message"=> "comment created successfully!"
+          ], 200);
+    }
+    // delete comment
+    public function deleteComment(Request $request){
+        $validator = Validator::make($request->all(), [
+            
+            'comment_id'=>['required','exists:comments,id'],
+             
+          ]);
+  
+          if ($validator->fails()) {
+              return response()->json([
+                  'message' => 'Validation errors',
+                  'errors' => $validator->errors(),  // Return validation errors
+              ], 422);  // 422 Unprocessable Entity
+          }
+        //   own comment
+        $comment =Comment::findOrFail($request->comment_id);
+        Gate::authorize('OwnComment',$comment);
+          $comment->delete();
+          return response()->json([
+            "message"=>"comment deleted successfully"
+          ], 200);
     }
 }
