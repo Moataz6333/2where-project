@@ -307,6 +307,51 @@
         <td> <input type="text" value="{{ url('/api/delBlogPhoto') }}" id="link19" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(19)">copy</button></td>
       </tr>
+      <tr class="table-warning">
+        <th scope="row">/like</th>
+
+        <td>like a blog</td>
+
+        <td>  token , blog_id</td>
+
+        <td>
+          message 
+        </td>
+
+
+        <td> <input type="text" value="{{ url('/api/like') }}" id="link20" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(20)">copy</button></td>
+      </tr>
+      <tr class="table-warning">
+        <th scope="row">/comment</th>
+
+        <td>comment a blog</td>
+
+        <td>  token , blog_id ,comment</td>
+
+        <td>
+          message 
+        </td>
+
+
+        <td> <input type="text" value="{{ url('/api/comment') }}" id="link21" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(21)">copy</button></td>
+      </tr>
+      <tr class="table-warning">
+        <th scope="row">/delComment</th>
+
+        <td>delete a comment </td>
+
+        <td>  token , comment_id </td>
+
+        <td>
+          message 
+        </td>
+
+
+        <td> <input type="text" value="{{ url('/api/delComment') }}" id="link22" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(22)">copy</button></td>
+      </tr>
       
      
      

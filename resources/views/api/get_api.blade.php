@@ -201,33 +201,33 @@
       <tr class="table-warning">
         <th scope="row">17</th>
 
-        <td >/myBlogs</td>
+        <td >/blogs/{id}</td>
 
-        <td>tourGuide blogs (only for tourguides with token)</td>
+        <td> blogs of tourguide with id  </td>
 
-        <td><a href="{{ url('/api/myBlogs') }}" target="_blank" class="btn btn-primary">view</a></td>
+        <td><a href="{{ url('/api/blogs/3') }}" target="_blank" class="btn btn-primary">view</a></td>
 
 
        
 
 
-        <td> <input type="text" value="{{ url('/api/myBlogs') }}" id="link17" class="form-control mb-3" style="display: none">
+        <td> <input type="text" value="{{ url('/api/blogs/3') }}" id="link17" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(17)">copy</button></td>
       </tr>
       <tr class="table-warning">
         <th scope="row">18</th>
 
-        <td >/myBlogs/{id}</td>
+        <td >/blog/{id}</td>
 
-        <td> blog with id (only for tourguides with token)</td>
+        <td> blog with id </td>
 
-        <td><a href="{{ url('/api/myBlogs/{id}') }}" target="_blank" class="btn btn-primary">view</a></td>
+        <td><a href="{{ url('/api/blog/{id}') }}" target="_blank" class="btn btn-primary">view</a></td>
 
 
        
 
 
-        <td> <input type="text" value="{{ url('/api/myBlogs/{id}') }}" id="link18" class="form-control mb-3" style="display: none">
+        <td> <input type="text" value="{{ url('/api/blog/{id}') }}" id="link18" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(18)">copy</button></td>
       </tr>
      
