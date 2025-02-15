@@ -14,7 +14,7 @@ class RestResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $postPhoto=$this->post->first();
+        $postPhoto=$this->post->where('type','post')->first();
         $records=$this->post->where('type','slider');
         $photos=[]; 
         foreach($records as $record){

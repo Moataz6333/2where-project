@@ -54,12 +54,13 @@ class CitesController extends Controller
     //rests , hotels , plans
 
     public function rests(){
-        $rests=RestResource::collection(Restaruant::all());
+        $rests=RestResource::collection(Restaruant::where('status','accepted')->get());
+       
         return response($rests,200,[]);
     }
     public function rest($id){
-
-        return response(new RestResource(Restaruant::find($id)),200,[]);
+            // Auth
+        return response(new RestResource(Restaruant::findOrFail($id)),200,[]);
     }
     public function hotels(){
         $hotels=HotelResource::collection(Hotel::all());

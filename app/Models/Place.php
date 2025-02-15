@@ -24,7 +24,7 @@ class Place extends Model
         'timeTables'
 
     ];
-    public function postPhoto(){
+    public function post(){
         return $this->hasMany(Photo::class);
     }
     public function photos(){

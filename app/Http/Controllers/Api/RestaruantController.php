@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Photo;
 use App\Models\Restaruant;
 use Illuminate\Support\Facades\Validator;
-
+use App\Http\Resources\RestResource;
 
 class RestaruantController extends Controller
 {
@@ -153,7 +153,8 @@ class RestaruantController extends Controller
                 }
            }
 
-        return response()->json(['rest'=>$rest,
+        return response()->json(['rest'=>new RestResource($rest) ,
+           
     "message"=>"resturant updated successfully"],200);
 
 
@@ -267,6 +268,7 @@ class RestaruantController extends Controller
             }
        }else{
                 return response()->json([
+                    
                     "message"=>"Proofs is required",
                 ], 400);
             }
@@ -274,7 +276,7 @@ class RestaruantController extends Controller
 
 
         
-        return response()->json(['rest'=>$rest,
+        return response()->json(['rest'=>new RestResource($rest),
             'message'=>'Restaruant requested successfully!'],200);
       }
     }

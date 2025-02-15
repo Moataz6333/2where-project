@@ -9,6 +9,8 @@ use App\Models\Photo;
 use App\Models\Hotel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Resources\HotelResource;
+
 
 class HotelController extends Controller
 {
@@ -120,7 +122,7 @@ class HotelController extends Controller
                 $photo->save();
                 
             }
-            return response()->json(['hotel'=>$hotel,
+            return response()->json(['hotel'=>new HotelResource($hotel),
             "message"=>"hotel updated successfully"],200);
        }
 
@@ -219,7 +221,7 @@ class HotelController extends Controller
 
 
         
-        return response()->json(['hotel'=> $hotel,'message'=>'Hotel requested successfully!'],201);
+        return response()->json(['hotel'=> new HotelResource($hotel),'message'=>'Hotel requested successfully!'],201);
     }
     }
 }

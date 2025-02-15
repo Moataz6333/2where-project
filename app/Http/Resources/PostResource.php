@@ -21,7 +21,7 @@ class PostResource extends JsonResource
             'post_description'=>$this->post_description,
             'address_title'=>$this->address_title,
             'rate'=>$this->rate,
-            'post_photo'=>url($this->postPhoto->path),
+            'post_photo'=>url($this->post->where('type','post')->first()->path),
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\Photo;
 use App\Models\Hotel;
 
+
 class HotelController extends Controller
 {
     /**
