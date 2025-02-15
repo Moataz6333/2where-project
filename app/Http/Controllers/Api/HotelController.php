@@ -14,7 +14,7 @@ class HotelController extends Controller
 {
     public function store(Request $request)
     {
-        Gate::authorize('isOwner');
+       
         
         $validator = Validator::make($request->all(), [
             'title'=>['required'],
