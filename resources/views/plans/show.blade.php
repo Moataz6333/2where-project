@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('title')Plans
+    
+@endsection
 @section('content')
 
 <h1 class="m-4 text-center">{{$plan->title}}</h1>
@@ -9,7 +12,7 @@
 <div class=" m-3 d-flex justify-content-start bg-primary-light alert-primary " >
     @foreach ($plan->places as $place)
     <div class="card m-2 border-primary" style="width: 15rem; color:black;" >
-        <img src="{{$place->postPhoto->path}}" class="card-img-top" alt="...">
+        <img src="{{asset($place->postPhoto->first()->path)}}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{$place->post_title}}</h5>
          
@@ -27,7 +30,7 @@
 <div class="rests m-3 d-flex justify-content-start alert-danger ">
     @foreach ($plan->restaruants as $place)
     <div class="card m-2 border-danger" style="width: 15rem; color:black;" >
-        <img src="{{$place->post->path}}" class="card-img-top" alt="...">
+        <img src="{{asset($place->post->first()->path)}}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{$place->title}}</h5>
          
@@ -46,7 +49,7 @@
 <div class="rests m-3 d-flex justify-content-start alert-success ">
     @foreach ($plan->hotels as $place)
     <div class="card m-2 border-success" style="width: 15rem; color:black; " >
-        <img src="{{$place->post->path}}" class="card-img-top" alt="...">
+        <img src="{{asset($place->post->first()->path)}}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{$place->title}}</h5>
          

@@ -71,7 +71,7 @@
 
         <td>users request for a restaruants</td>
 
-        <td> user_id , title,  ,rate , categories , price , address , hours ,postPhoto(input) <br> ,menu[array of images] , images[array of images]</td>
+        <td>  title,  ,rate , categories , price , address , hours ,postPhoto(input) <br> ,menu[array of images] , images[array of images]</td>
 
         <td>
            rest , message
@@ -86,7 +86,7 @@
 
         <td>users request for a Hotels</td>
 
-        <td> user_id , title,  ,rate , features , price , address , link ,postPhoto(photo) <br>  , images[array of photos]</td>
+        <td>  title,  ,rate , features , price , address , link ,postPhoto(photo) <br>  , images[array of photos]</td>
 
         <td>
            hotel , message
@@ -307,7 +307,7 @@
         <td> <input type="text" value="{{ url('/api/delBlogPhoto') }}" id="link19" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(19)">copy</button></td>
       </tr>
-      <tr class="table-warning">
+      <tr class="table-success">
         <th scope="row">/like</th>
 
         <td>like a blog</td>
@@ -322,7 +322,7 @@
         <td> <input type="text" value="{{ url('/api/like') }}" id="link20" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(20)">copy</button></td>
       </tr>
-      <tr class="table-warning">
+      <tr class="table-success">
         <th scope="row">/comment</th>
 
         <td>comment a blog</td>
@@ -337,7 +337,7 @@
         <td> <input type="text" value="{{ url('/api/comment') }}" id="link21" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(21)">copy</button></td>
       </tr>
-      <tr class="table-warning">
+      <tr class="table-success">
         <th scope="row">/delComment</th>
 
         <td>delete a comment </td>

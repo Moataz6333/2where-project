@@ -22,7 +22,7 @@ class RestaruantController extends Controller
             'images.*' =>  [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
             'menu.*' =>  [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
 
-            'user_id'=>['required','exists:users,id'],
+            
         ]);
     
        
@@ -42,7 +42,7 @@ class RestaruantController extends Controller
         $rest->address = $request->address;
         $rest->hours=$request->hours;
         $rest->status='pending';
-        $rest->user_id=$request->user_id;
+        $rest->user_id=auth()->user()->id;
         
         $rest->save();
 
@@ -64,9 +64,7 @@ class RestaruantController extends Controller
             $photo->path=$relativePath;
             $photo->type = "post";
             $photo->save();
-         return response()->json([
-            'message'=>"profile photo updated successfully"
-         ], 201);
+       
         }else{
             return response()->json([
                 'message'=>"something went wrong about postphoto"
@@ -74,14 +72,14 @@ class RestaruantController extends Controller
         }       
        
     
-        if ($request->hasFile('menus')) {
+        if ($request->hasFile('menu')) {
             // $mainPhoto = $request->file('image');
               
             $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/images/userRests/'.$rest->id.'/menus';
             if (!file_exists($destinationPath)) {
                 mkdir($destinationPath, 0777, true);
             }
-            foreach ($request->file('menus') as $mainPhoto) {
+            foreach ($request->file('menu') as $mainPhoto) {
                
                 $fileName =  $mainPhoto->getClientOriginalName();
                 

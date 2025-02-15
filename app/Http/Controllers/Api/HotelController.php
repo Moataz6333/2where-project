@@ -19,7 +19,7 @@ class HotelController extends Controller
         $validator = Validator::make($request->all(), [
             'title'=>['required'],
             'address'=>['required'],
-            'user_id'=>['required','exists:users,id'],
+            
             'postPhoto' =>  ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
             'images.*' =>  [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
         ]);
@@ -41,7 +41,7 @@ class HotelController extends Controller
         $hotel->address = $request->address;
         $hotel->link=$request->link;
         $hotel->status='pending';
-        $hotel->user_id=$request->user_id;
+        $hotel->user_id=auth()->user()->id;
         
         $hotel->save();
 
@@ -63,9 +63,7 @@ class HotelController extends Controller
             $photo->path=$relativePath;
             $photo->type = "post";
             $photo->save();
-         return response()->json([
-            'message'=>"profile photo updated successfully"
-         ], 201);
+         
         }else{
             return response()->json([
                 'message'=>"something went wrong about postphoto"

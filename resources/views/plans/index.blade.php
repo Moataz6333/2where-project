@@ -1,4 +1,7 @@
 @extends('layouts.main')
+@section('title')Plans
+    
+@endsection
 @section('content')
 
 <h1 class="text-center m-4">Plans</h1>

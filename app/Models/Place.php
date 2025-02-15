@@ -25,10 +25,10 @@ class Place extends Model
 
     ];
     public function postPhoto(){
-        return $this->hasOne(Photo::class)->where('type','post');
+        return $this->hasMany(Photo::class);
     }
     public function photos(){
-        return $this->hasMany(Photo::class)->where('type','mainPhoto');
+        return $this->hasMany(Photo::class);
     }
     public function prices(){
         return $this->hasOne(Price::class);
