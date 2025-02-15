@@ -71,7 +71,7 @@
 
         <td>users request for a restaruants</td>
 
-        <td>  title,  ,rate , categories , price , address , hours ,postPhoto(input) <br> ,menu[array of images] , images[array of images]</td>
+        <td>  title,  ,rate , categories , price , address , hours ,postPhoto(input) <br> ,menu[array of images] , images[array of images] ,proofs[]</td>
 
         <td>
            rest , message
@@ -86,7 +86,7 @@
 
         <td>users request for a Hotels</td>
 
-        <td>  title,  ,rate , features , price , address , link ,postPhoto(photo) <br>  , images[array of photos]</td>
+        <td>  title,  ,rate , features , price , address , link ,postPhoto(photo) <br>  , images[array of photos] , proofs []</td>
 
         <td>
            hotel , message

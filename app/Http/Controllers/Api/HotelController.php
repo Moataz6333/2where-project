@@ -22,6 +22,8 @@ class HotelController extends Controller
             
             'postPhoto' =>  ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
             'images.*' =>  [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
+            'proofs'=>['required','array'],
+            'proofs.*' =>  [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
         ]);
     
        
@@ -93,6 +95,32 @@ class HotelController extends Controller
                 
             }
        }
+        if ($request->hasFile('proofs')) {
+            // $mainPhoto = $request->file('image');
+              
+            $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/images/userHotels/'.$hotel->id;
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            foreach ($request->file('proofs') as $mainPhoto) {
+               
+                $fileName =  $mainPhoto->getClientOriginalName();
+                
+                // Move the file to the destination path
+                $mainPhoto->move($destinationPath, $fileName);
+                $relativePath = '/images/userHotels/'.$hotel->id.'/' . $fileName;
+                $photo = new Photo();
+                $photo->hotel_id=$hotel->id;
+                $photo->path= $relativePath;
+                $photo->type='proofs';
+                $photo->save();
+                
+            }
+       }else{
+        return response()->json([
+            "message"=>"Proofs is required",
+        ], 400);
+    }
         
 
 

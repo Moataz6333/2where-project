@@ -20,13 +20,15 @@ class RequestController extends Controller
         $user=User::find($rest->user_id);
         $menus=$rest->post->where('type','menu');
         $photos=$rest->post->where('type','slider');
-        return view('requests.show',compact('rest','user','menus','photos'));
+        $proofs=$rest->post->where('type','proofs');
+        return view('requests.show',compact('rest','user','menus','photos','proofs'));
     }
     public function show_hotel($id){
         $hotel=Hotel::find($id);
         $user=User::find($hotel->user_id);
         $photos=$hotel->post->where('type','slider');
-        return view('requests.show_hotel',compact('hotel','user','photos'));
+        $proofs=$hotel->post->where('type','proofs');
+        return view('requests.show_hotel',compact('hotel','user','photos','proofs'));
     }
     public function accept($id){
         $rest=Restaruant::find($id);

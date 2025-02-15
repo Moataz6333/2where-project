@@ -135,7 +135,7 @@ class RestaruantController extends Controller
         $rest= Restaruant::find($id);
         $rest->post()->delete();
         $rest->delete();
-        return back()->with('success', 'Restaurant Deleted successfully.');
+        return to_route('rests.index',1);
 
     }
     //photos

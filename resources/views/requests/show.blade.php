@@ -20,6 +20,18 @@
     </div>
 
     <div class="citiesContainer d-flex justify-content-flex-start m-3 alert alert-dark">
+        <h3>Proofs </h3>
+      
+        @foreach ($proofs as $proof)
+        <div class="card" style="width: 18rem;">
+          <img src="{{url($proof->path)}}" class="card-img-top" alt="...">
+        
+          
+          </div> 
+          @endforeach
+  
+      </div>
+    <div class="citiesContainer d-flex justify-content-flex-start m-3 alert alert-dark">
         <h3>Menu </h3>
       
         @foreach ($menus as $menu)
