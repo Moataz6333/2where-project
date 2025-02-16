@@ -47,12 +47,7 @@
 
 
     <div class="d-flex m-4" style="justify-content: space-evenly">
-        <form action="{{route('hotels.destroy',$hotel->id)}}" method="POST" class="d-inline-block" onsubmit="return confirmDelete()">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" style="width: 10rem">Delete</button>
-
-          </form>    
+        
         <a href="{{route('hotel.accept',$hotel->id)}}" class="btn btn-success" style="width: 10rem">Accept</a>
 
     </div>

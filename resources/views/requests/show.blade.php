@@ -60,12 +60,7 @@
 
 
     <div class="d-flex m-4" style="justify-content: space-evenly">
-        <form action="{{route('rests.destroy',$rest->id)}}" method="POST" class="d-inline-block" onsubmit="return confirmDelete()">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger" style="width: 10rem">Delete</button>
-
-          </form>    
+         
         <a href="{{route('rest.accept',$rest->id)}}" class="btn btn-success" style="width: 10rem">Accept</a>
 
     </div>

@@ -12,7 +12,7 @@
 <div class=" m-3 d-flex justify-content-start bg-primary-light alert-primary " >
     @foreach ($plan->places as $place)
     <div class="card m-2 border-primary" style="width: 15rem; color:black;" >
-        <img src="{{asset($place->postPhoto->first()->path)}}" class="card-img-top" alt="...">
+        <img src="{{asset($place->post->first()->path)}}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{$place->post_title}}</h5>
          
