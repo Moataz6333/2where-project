@@ -86,10 +86,12 @@ class PhotoController extends Controller
          $rests=$this->count_photos('restaraunts','restaruant_id');
          $hotels=$this->count_photos('hotels','hotel_id');
          $trads=$this->count_photos('traditions','tradition_id');
+         $userRests =$this->count_userRests();
+         $userHotels =$this->count_userHotels();
        
         
         
-        return view('photos.index',compact('cities','places','rests','hotels','trads'));
+        return view('photos.index',compact('cities','places','rests','hotels','trads','userRests','userHotels'));
     }
 
     //places , place_id
@@ -131,11 +133,32 @@ class PhotoController extends Controller
         $photosFromDB=Photo::whereNotNull($id)->get();
         $paths=[];
         foreach($photosFromDB as $photo){
-            
-               if (!Str::startsWith($photo->path, 'http')) {
-               
-                array_push($paths,$photo->path);
-               }
+                if($id == "restaruant_id"){
+
+                    $rest = Restaruant::where('id',$photo->restaruant_id)->first();
+                    if($rest->status == "accepted"){
+                        if (!Str::startsWith($photo->path, 'http')) {
+                        
+                         array_push($paths,$photo->path);
+                        }
+    
+                    }
+                } elseif ($id == "hotel_id") {
+                    $hotel = Hotel::where('id',$photo->hotel_id)->first();
+                    if($hotel->status == "accepted"){
+                        if (!Str::startsWith($photo->path, 'http')) {
+                        
+                         array_push($paths,$photo->path);
+                        }
+    
+                    }
+                }
+                else{
+                    if (!Str::startsWith($photo->path, 'http')) {
+                        
+                        array_push($paths,$photo->path);
+                       }
+                }
             
         }
        
@@ -154,6 +177,102 @@ class PhotoController extends Controller
                 
             return count($imgs)-count($paths);
            
+    }
+
+    public function clear_userRests(){
+        $directory = $_SERVER['DOCUMENT_ROOT'].'/images/userRests';
+        // files with id
+        $files =array_diff(scandir($directory), array('.', '..')) ;
+            foreach ($files as $file) {
+                if(is_numeric($file)){
+                    // rest folder
+                    $rest =Restaruant::where('id',$file)->first();
+                      if(! $rest){
+                        // delete the folder
+                        rmdir($directory.'/'.$file);
+                        }
+
+                }else{
+                    // post photos
+                   $photo = Photo::where('path','/images/userRests/'.$file)->first();
+                   if (!$photo) {
+                    unlink($directory.'/'.$file);
+                   } 
+                   
+                }
+            }
+            return  redirect()->back()->with('success','photo deleted successfully');
+    }
+
+    public function count_userRests()  {
+        $directory = $_SERVER['DOCUMENT_ROOT'].'/images/userRests';
+        // files with id
+        $files =array_diff(scandir($directory), array('.', '..')) ;
+      
+        $count =0;
+        foreach($files as $file){
+            if (is_numeric($file)) {
+                $rest =Restaruant::where('id',$file)->first();
+                      if(! $rest){
+                        $count ++;
+                        }
+            } else {
+                $photo = Photo::where('path','/images/userRests/'.$file)->first();
+                   if (!$photo) {
+                   $count++;
+                   } 
+            }
+
+            
+        }
+        return $count;
+    }
+    public function count_userHotels()  {
+        $directory = $_SERVER['DOCUMENT_ROOT'].'/images/userHotels';
+        // files with id
+        $files =array_diff(scandir($directory), array('.', '..')) ;
+      
+        $count =0;
+        foreach($files as $file){
+            if (is_numeric($file)) {
+                $rest =Hotel::where('id',$file)->first();
+                      if(! $rest){
+                        $count ++;
+                        }
+            } else {
+                $photo = Photo::where('path','/images/userHotels/'.$file)->first();
+                   if (!$photo) {
+                   $count++;
+                   } 
+            }
+
+            
+        }
+        return $count;
+    }
+    public function clear_userHotels(){
+        $directory = $_SERVER['DOCUMENT_ROOT'].'/images/userHotels';
+        // files with id
+        $files =array_diff(scandir($directory), array('.', '..')) ;
+            foreach ($files as $file) {
+                if(is_numeric($file)){
+                    // rest folder
+                    $rest =Hotel::where('id',$file)->first();
+                      if(! $rest){
+                        // delete the folder
+                        rmdir($directory.'/'.$file);
+                        }
+
+                }else{
+                    // post photos
+                   $photo = Photo::where('path','/images/userHotels/'.$file)->first();
+                   if (!$photo) {
+                    unlink($directory.'/'.$file);
+                   } 
+                   
+                }
+            }
+            return  redirect()->back()->with('success','photo deleted successfully');
     }
    
     

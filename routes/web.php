@@ -134,6 +134,8 @@ Route::delete('/hotels/destroy/{rest}',[HotelController::class,'destroy'])->name
     
     //clear photos
     Route::get('clear-photos',[PhotoController::class,'clear_photos'])->name('clear-photos');
+    Route::get('clear-userRests',[PhotoController::class,'clear_userRests'])->name('clear-userRests');
+    Route::get('clear-userHotels',[PhotoController::class,'clear_userHotels'])->name('clear-userHotels');
     
     //requests page
     Route::get('/requests',[RequestController::class,'index'])->name('requests.index');

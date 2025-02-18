@@ -52,7 +52,7 @@
         </select>
       </div>
       <h3 class="mt-2 mb-2">Post</h3>
-      <img src="{{$postPhoto->path}}" class="card-img-top mb-2" alt="..." style="width: 50%">
+      <img src="{{asset($postPhoto->path)}}" class="card-img-top mb-2" alt="..." style="width: 50%">
       <div class="form-group">
         <label for="postPhoto">Post photo</label>
         <small  class="form-text text-muted">recommended 600×400 px</small>

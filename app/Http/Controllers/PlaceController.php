@@ -112,7 +112,7 @@ class PlaceController extends Controller
         $cities=City::all();
        
        
-        $postPhoto = Photo::where('place_id',$id)->where('type','post')->get()->first();
+        $postPhoto = $place->post->first();
         // dd($postPhoto);
         //post photo
        
