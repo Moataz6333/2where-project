@@ -286,11 +286,11 @@ public function login()
     public function deleteProfilePic(Request $request){
         // user_id , photo
         $user = auth()->user();
-        $photo =Photo::where('user_id',$user->id)->where('type','profile')->get()->first();
+        $photo =Photo::where('user_id',$user->id)->where('type','profile')->first();
         if($photo){
             $file = $_SERVER['DOCUMENT_ROOT'].$photo->path;
             unlink($file);
-            $photo->delete()  ;
+            $photo->delete();
 
             return response()->json([
                 'message'=>"profile photo deleted successfully"
