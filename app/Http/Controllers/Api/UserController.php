@@ -288,7 +288,8 @@ public function login()
         $user = auth()->user();
         $photo =Photo::where('user_id',$user->id)->where('type','profile')->get()->first();
         if($photo){
-          
+            $file = $_SERVER['DOCUMENT_ROOT'].$photo->path;
+            unlink($file);
             $photo->delete()  ;
 
             return response()->json([
