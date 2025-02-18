@@ -122,7 +122,7 @@ class AlbumController extends Controller
         Gate::authorize('isTourGuide');
         Gate::authorize('TourGuideAccepted',TourGuide::where('user_id',auth()->user()->id)->first());
         $validator = Validator::make($request->all(), [
-            'photo_id' => ['required'],
+            'photo_id' => ['required','exists:photos,id'],
            
         ]);
 
