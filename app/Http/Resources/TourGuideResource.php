@@ -42,7 +42,8 @@ class TourGuideResource extends JsonResource
             "languages"=> $this->languages,
             "rate"=> $this->rate,
             "experience"=> $this->experience,
-            "albums"=>$photos
+            "albums"=>$photos,
+            "blogs"=>BlogResource::collection($this->blogs)
             
 
         ];
