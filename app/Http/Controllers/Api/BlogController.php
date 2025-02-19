@@ -123,9 +123,8 @@ class BlogController extends Controller
           Gate::authorize('TourGuideAccepted',$tourGuide);
           $validator = Validator::make($request->all(), [
             'blog_id'=>['required','exists:blogs,id'],
-              'description'=>[ 'min:1' , 'max:255'],
-              'images'=>['array','min:1' , 'max:6'],
-              'images.*' => [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048']
+              'description'=>['required', 'min:1' , 'max:255'],
+              
              
           ]);
   
@@ -138,47 +137,19 @@ class BlogController extends Controller
                 $blog =Blog::findOrFail($request->blog_id);
             
                 Gate::authorize('OwnBlog',$blog);
-                
-  
-              if($request->description || $request->images){
-
+        
                  
                   $blog->description =$request->description;
                   $blog->save();
           
-                  if ($request->hasFile('images')) {
-                     
-                        
-                      $destinationPath = $_SERVER['DOCUMENT_ROOT'] . '/images/blogs/'.$blog->id;
-                      if (!file_exists($destinationPath)) {
-                          mkdir($destinationPath, 0777, true);
-                      }
-          
-                      foreach ($request->file('images') as $mainPhoto) {
-                         
-                          $fileName =  $mainPhoto->getClientOriginalName();
-                          
-                          // Move the file to the destination path
-                          $mainPhoto->move($destinationPath, $fileName);
-                          $relativePath = '/images/blogs/'.$blog->id.'/' . $fileName;
-                          $photo = new Photo();
-                          $photo->path= $relativePath;
-                          $photo->blog_id=$blog->id;
-                          $photo->save();
-                          
-                      }
-                  }
+                 
                   return response()->json([
                     'blog'=>new BlogResource($blog)
                  
                     ],201);
-              }
+              
   
-               return response()->json([
-                   "message"=>"blog must contain a body",
-
-                    ],400);
-        
+              
     }
 
    
