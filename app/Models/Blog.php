@@ -13,7 +13,8 @@ class Blog extends Model
     use HasFactory;
     protected $fillable=[
         'description',
-        'tour_guide_id'
+        'tour_guide_id',
+        'location',
     ];
 
     public function photos(){

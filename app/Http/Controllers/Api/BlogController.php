@@ -40,6 +40,7 @@ class BlogController extends Controller
         Gate::authorize('TourGuideAccepted',$tourGuide);
         $validator = Validator::make($request->all(), [
             'description'=>[ 'min:1' , 'max:255'],
+            'location'=>[  'max:300'],
             'images'=>['array','min:1' , 'max:6'],
             'images.*' => [ 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048']
            
@@ -57,6 +58,7 @@ class BlogController extends Controller
                 $blog =new Blog();
                 $blog->tour_guide_id =$tourGuide->id;
                 $blog->description =$request->description;
+                $blog->location =$request->location;
                 $blog->save();
         
                 if ($request->hasFile('images')) {

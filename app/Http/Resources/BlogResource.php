@@ -35,6 +35,7 @@ class BlogResource extends JsonResource
        return [
             'id'=>$this->id,
             'description'=>$this->description,
+            'location'=>$this->location,
             'created_at'=>$this->created_at,
             'photos'=>$this->photos,
             'likes'=>$likes,
