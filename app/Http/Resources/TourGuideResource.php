@@ -34,7 +34,8 @@ class TourGuideResource extends JsonResource
         }
 
         return [
-            "id"=>$this->id,
+            "id"=>$this->user_id,
+            "tourGuide_id"=>$this->id,
             "name"=> $this->user->name,
             "photo"=> $photo,
             "about"=> $this->about,
