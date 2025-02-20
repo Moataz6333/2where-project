@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class BlogResource extends JsonResource
 {
@@ -17,18 +18,32 @@ class BlogResource extends JsonResource
         $likes =[];
         $comments =[];
         $photos =[];
+      
+        
 
         foreach ($this->likes as $like) {
+            $profile="";
+            if($like->user->photo->where('type','profile')->first()){
+                $profile=url($like->user->photo->where('type','profile')->first()->path);
+            }
+        
             array_push($likes,[
                 "id"=>$like->id,
-                "user"=>$like->user->name
+                "name"=>$like->user->name,
+                "profile"=>$profile
             ]);
         }
         foreach ($this->comments as $comment) {
+            $profile="";
+            if($like->user->photo->where('type','profile')->first()){
+                $profile=url($like->user->photo->where('type','profile')->first()->path);
+            }
             array_push($comments,[
                 "id"=>$comment->id,
-                "user"=>$comment->user->name,
-                "comment"=>$comment->comment
+                "name"=>$comment->user->name,
+                "comment"=>$comment->comment,
+                "profile"=>$profile,
+                "created_at"=>Carbon::parse($comment->created_at)->diffForHumans()
             ]);
         }
         foreach ($this->photos as $photo) {
@@ -43,7 +58,7 @@ class BlogResource extends JsonResource
             'id'=>$this->id,
             'description'=>$this->description,
             'location'=>$this->location,
-            'created_at'=>$this->created_at,
+            'created_at'=>Carbon::parse($this->created_at)->diffForHumans(),
             'photos'=>$photos,
             'likes'=>$likes,
             'comments'=>$comments
