@@ -44,7 +44,7 @@ class BlogResource extends JsonResource
             'description'=>$this->description,
             'location'=>$this->location,
             'created_at'=>$this->created_at,
-            'photos'=>$this->photos,
+            'photos'=>$photos,
             'likes'=>$likes,
             'comments'=>$comments
        ];
