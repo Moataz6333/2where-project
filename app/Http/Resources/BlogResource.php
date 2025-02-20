@@ -16,6 +16,7 @@ class BlogResource extends JsonResource
     {
         $likes =[];
         $comments =[];
+        $photos =[];
 
         foreach ($this->likes as $like) {
             array_push($likes,[
@@ -28,6 +29,12 @@ class BlogResource extends JsonResource
                 "id"=>$comment->id,
                 "user"=>$comment->user->name,
                 "comment"=>$comment->comment
+            ]);
+        }
+        foreach ($this->photos as $photo) {
+            array_push($photos,[
+                "id"=>$photo->id,
+                "path"=>url($photo->path)
             ]);
         }
 
