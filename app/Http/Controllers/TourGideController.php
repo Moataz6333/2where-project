@@ -15,9 +15,16 @@ class TourGideController extends Controller
     }
 
     public function accept($id){
+         
+
         $tourGuide=TourGuide::findOrFail($id);
         $tourGuide->accepted=true;
         $tourGuide->save();
+        // first change the role of the user
+        $user =User::find($tourGuide->user_id);
+        $user->role="tourGuide";
+        $user->save();
+
 
         // send congratiolations email
         $user = $tourGuide->user->name ;

@@ -19,7 +19,12 @@ class TourGideController extends Controller
     }
     public function tourGuide(Request $request)  {
         // id
-        $tourGuide = TourGuide::findOrFail($request->id);
+        $user = User::findOrFail($request->id);
+        if($user->role != "tourGuide"){
+            return response()->json(["message"=>"this user is not a tourGuide  !"], 404);
+        }
+        $tourGuide = TourGuide::where('user_id',$user->id)->first();
+        
         if($tourGuide->accepted){
 
             return response()->json(new TourGuideResource($tourGuide),200);
@@ -50,10 +55,7 @@ class TourGideController extends Controller
         }
 
 
-        // first change the role of the user
-        $user =User::find($request->user_id);
-        $user->role="tourGuide";
-        $user->save();
+       
 
         $tourGuide =new TourGuide();
         $tourGuide->user_id=$request->user_id;
