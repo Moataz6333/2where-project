@@ -35,8 +35,8 @@ class BlogResource extends JsonResource
         }
         foreach ($this->comments as $comment) {
             $profile="";
-            if($like->user->photo->where('type','profile')->first()){
-                $profile=url($like->user->photo->where('type','profile')->first()->path);
+            if($comment->user->photo->where('type','profile')->first()){
+                $profile=url($comment->user->photo->where('type','profile')->first()->path);
             }
             array_push($comments,[
                 "id"=>$comment->id,
