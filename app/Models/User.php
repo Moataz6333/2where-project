@@ -26,6 +26,7 @@ class User extends Authenticatable
         'birthDate',
         'role',
         'accept_policies',
+        'google_id',
     ];
 
     /**

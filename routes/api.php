@@ -135,3 +135,6 @@ Route::post('/upload', function (Request $request) {
     return response()->json(['error' => 'File not uploaded'], 400);
 });
 
+// google auth
+Route::get('auth/google/redirect', [UserController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback']);

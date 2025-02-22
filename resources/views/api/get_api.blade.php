@@ -230,6 +230,38 @@
         <td> <input type="text" value="{{ url('/api/blog/{id}') }}" id="link18" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(18)">copy</button></td>
       </tr>
+      <tr class="table-danger">
+        <th scope="row">19</th>
+
+        <td >/auth/google/redirect</td>
+
+        <td> regirect to google page , returns url </td>
+
+        <td><a href="{{ url('/api/auth/google/redirect') }}" target="_blank" class="btn btn-primary">view</a></td>
+
+
+       
+
+
+        <td> <input type="text" value="{{ url('/api/auth/google/redirect') }}" id="link19" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(19)">copy</button></td>
+      </tr>
+      <tr class="table-danger">
+        <th scope="row">20</th>
+
+        <td >/auth/google/callback</td>
+
+        <td> url with token , or error </td>
+
+        <td><a href="{{ url('/api/auth/google/callback') }}" target="_blank" class="btn btn-primary">view</a></td>
+
+
+       
+
+
+        <td> <input type="text" value="{{ url('/api/auth/google/callback') }}" id="link20" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(20)">copy</button></td>
+      </tr>
      
     </tbody>
   </table>

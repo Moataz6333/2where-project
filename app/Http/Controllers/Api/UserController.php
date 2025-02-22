@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\RestResource;
 use App\Http\Resources\HotelResource;
+use Laravel\Socialite\Facades\Socialite;
+
 
 class UserController extends Controller
 {
@@ -299,6 +301,37 @@ public function login()
          return response()->json([
             'message'=>"profile photo not found"
          ], 404);
+    }
+    // google
+    public function redirectToGoogle()
+    {
+        return response()->json([
+            'url' => Socialite::driver('google')->stateless()->redirect()->getTargetUrl()
+        ]);
+    }
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+
+            // Find or create the user
+            $user = User::updateOrCreate(
+                ['email' => $googleUser->getEmail()],
+                [
+                    'name' => $googleUser->getName(),
+                    'google_id' => $googleUser->getId(),
+                    'password' => bcrypt(Str::random(16)), // Random password
+                ]
+            );
+
+            // Generate token (if using Sanctum or Passport)
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return redirect()->to("http://localhost:3000/auth/callback?token=$token");
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Authentication failed', 'message' => $e->getMessage()], 500);
+        }
     }
 
 }
