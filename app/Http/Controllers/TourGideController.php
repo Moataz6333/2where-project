@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TourGuide;
 use Resend\Laravel\Facades\Resend;
+use App\Models\User;
 
 class TourGideController extends Controller
 {
