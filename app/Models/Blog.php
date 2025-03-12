@@ -26,4 +26,7 @@ class Blog extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+    public function tourGuide()  {
+        return $this->belongsTo(TourGuide::class,'tour_guide_id');
+    }
 }

@@ -13,6 +13,7 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\BlogResource;
+use App\Http\Resources\BlogPublicResource;
 
 class BlogController extends Controller
 {
@@ -33,7 +34,7 @@ class BlogController extends Controller
     // get all blogs
     public function blogs()  {
         $blogs =Blog::inRandomOrder()->get();
-        return response()->json(BlogResource::collection($blogs), 200,);
+        return response()->json(BlogPublicResource::collection($blogs), 200,);
     }
 
   
