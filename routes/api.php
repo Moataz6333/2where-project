@@ -94,6 +94,8 @@ Route::get('/blog/{id}',[BlogController::class,'show']);
 Route::post('/editBlog',[BlogController::class,'update'])->middleware('auth:sanctum');
 Route::post('/delBlog/{id}',[BlogController::class,'destroy'])->middleware('auth:sanctum');
 Route::post('/delBlogPhoto',[BlogController::class,'delPhoto'])->middleware('auth:sanctum');
+// all blogs (public)
+Route::get('/blogs', [BlogController::class,'blogs']);
 // like
 Route::post('/like',[BlogController::class,'like'])->middleware('auth:sanctum');
 // comment

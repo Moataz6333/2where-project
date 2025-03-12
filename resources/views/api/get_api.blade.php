@@ -262,6 +262,22 @@
         <td> <input type="text" value="{{ url('/api/auth/google/callback') }}" id="link20" class="form-control mb-3" style="display: none">
             <button class="btn btn-danger" onclick="copyLink(20)">copy</button></td>
       </tr>
+      <tr class="table-primary">
+        <th scope="row">21</th>
+
+        <td >/blogs</td>
+
+        <td> blogs in random order</td>
+
+        <td><a href="{{ url('/api/blogs') }}" target="_blank" class="btn btn-primary">view</a></td>
+
+
+       
+
+
+        <td> <input type="text" value="{{ url('/api/blogs') }}" id="link21" class="form-control mb-3" style="display: none">
+            <button class="btn btn-danger" onclick="copyLink(21)">copy</button></td>
+      </tr>
      
     </tbody>
   </table>

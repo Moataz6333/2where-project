@@ -30,6 +30,11 @@ class BlogController extends Controller
           
              ],200);
     }
+    // get all blogs
+    public function blogs()  {
+        $blogs =Blog::inRandomOrder()->get();
+        return response()->json(BlogResource::collection($blogs), 200,);
+    }
 
   
     public function store(Request $request)
