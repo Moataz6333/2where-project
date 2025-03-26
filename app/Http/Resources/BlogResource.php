@@ -56,6 +56,7 @@ class BlogResource extends JsonResource
 
        return [
             'id'=>$this->id,
+            'name'=>$this->tourGuide->user->name,
             'description'=>$this->description,
             'location'=>$this->location,
             'created_at'=>Carbon::parse($this->created_at)->diffForHumans(),
