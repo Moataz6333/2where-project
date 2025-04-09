@@ -81,8 +81,6 @@ class CitesController extends Controller
     }
 
     //about
-  
-
         public function about() {
             $regions = [
                 [
@@ -115,6 +113,30 @@ class CitesController extends Controller
         
             return response($jsonData, 200)->header('Content-Type', 'application/json');
         }
+
+    // search
+    public function search(Request $request)  {
+        $request->validate([
+            'name'=>'min:2|max:100'
+        ]);
+        $place =Place::where('title', 'like', '%' . $request->name . '%')->first();
+      if($place){
+        
+        return to_route('places.edit',$place->id);
+        dd($place);
+      }else if(Restaruant::where('title', 'like', '%' . $request->name . '%')->first()){
+        return to_route('rests.edit',Restaruant::where('title', 'like', '%' . $request->name . '%')->first()->id) ;
+
+      }else if(Hotel::where('title', 'like', '%' . $request->name . '%')->first()){
+       return to_route('hotels.edit',Hotel::where('title', 'like', '%' . $request->name . '%')->first()->id) ;
+
+
+      }else{
+        dd('none');
+      }
+            
+        
+    }
         
     
 

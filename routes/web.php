@@ -155,3 +155,5 @@ Route::delete('/hotels/destroy/{rest}',[HotelController::class,'destroy'])->name
 
     
 });
+
+Route::view('test', 'test');

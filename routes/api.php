@@ -140,3 +140,6 @@ Route::post('/upload', function (Request $request) {
 // google auth
 Route::get('auth/google/redirect', [UserController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback']);
+
+// search
+Route::post('/search',[CitesController::class,'search'] );

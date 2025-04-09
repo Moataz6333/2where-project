@@ -35,7 +35,7 @@
     </div>
 
    
-    <div class="citiesContainer d-flex justify-content-flex-start m-3 alert alert-dark">
+    <div class="citiesContainer d-flex flex-wrap m-3 alert alert-dark">
       
       @foreach ($menus as $menu)
       <div class="card" style="width: 18rem;">
@@ -63,7 +63,7 @@
  
 
 
-  <div class="citiesContainer d-flex justify-content-flex-start m-3">
+  <div class="citiesContainer d-flex flex-wrap m-3">
     @foreach ($photos as $photo)
     <div class="card" style="width: 18rem;">
         <img src="{{url($photo->path)}}" class="card-img-top" alt="...">

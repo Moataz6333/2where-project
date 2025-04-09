@@ -27,7 +27,7 @@
 
 
 
-  <div class="citiesContainer d-flex justify-content-flex-start m-3">
+  <div class="citiesContainer d-flex  m-3 flex-wrap">
     @foreach ($photos as $photo)
     <div class="card" style="width: 18rem;">
         <img src="{{url($photo->path)}}" class="card-img-top" alt="...">

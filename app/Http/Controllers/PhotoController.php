@@ -81,8 +81,8 @@ class PhotoController extends Controller
     //clear photos
     public function clear_photos(){
       
+        $places=$this->count_photos('places','place_id');
          $cities=$this->count_photos('cities','city_id');
-         $places=$this->count_photos('places','place_id');
          $rests=$this->count_photos('restaraunts','restaruant_id');
          $hotels=$this->count_photos('hotels','hotel_id');
          $trads=$this->count_photos('traditions','tradition_id');
@@ -99,7 +99,13 @@ class PhotoController extends Controller
         $photosFromDB=Photo::whereNotNull($id)->get();
         $paths=[];
         foreach($photosFromDB as $photo){
-            array_push($paths,$photo->path);
+            if(!Str::startsWith($photo->path, '/')){
+                
+                array_push($paths,'/'.$photo->path);
+            }else{
+                
+                array_push($paths,$photo->path);
+            }
         }
 
 
@@ -114,7 +120,7 @@ class PhotoController extends Controller
         array_push($imgs,'/images/'.$dir.'/'.$image);
       }
                 
-        //   dd($imgs,$paths);
+          
             $i=0;
         foreach($imgs as $img){
             if(! in_array($img ,$paths)){
@@ -132,14 +138,20 @@ class PhotoController extends Controller
 
         $photosFromDB=Photo::whereNotNull($id)->get();
         $paths=[];
+        // get the images paths from db
         foreach($photosFromDB as $photo){
                 if($id == "restaruant_id"){
 
                     $rest = Restaruant::where('id',$photo->restaruant_id)->first();
                     if($rest->status == "accepted"){
                         if (!Str::startsWith($photo->path, 'http')) {
-                        
-                         array_push($paths,$photo->path);
+                            if(!Str::startsWith($photo->path, '/')){
+                
+                                array_push($paths,'/'.$photo->path);
+                            }else{
+                                
+                                array_push($paths,$photo->path);
+                            }
                         }
     
                     }
@@ -148,7 +160,13 @@ class PhotoController extends Controller
                     if($hotel->status == "accepted"){
                         if (!Str::startsWith($photo->path, 'http')) {
                         
-                         array_push($paths,$photo->path);
+                            if(!Str::startsWith($photo->path, '/')){
+                
+                                array_push($paths,'/'.$photo->path);
+                            }else{
+                                
+                                array_push($paths,$photo->path);
+                            }
                         }
     
                     }
@@ -156,25 +174,31 @@ class PhotoController extends Controller
                 else{
                     if (!Str::startsWith($photo->path, 'http')) {
                         
-                        array_push($paths,$photo->path);
+                        if(!Str::startsWith($photo->path, '/')){
+                
+                            array_push($paths,'/'.$photo->path);
+                        }else{
+                            
+                            array_push($paths,$photo->path);
+                        }
                        }
                 }
             
         }
-       
-
-
+    
         //dir
         // $directory = public_path('images/places');
         $directory = $_SERVER['DOCUMENT_ROOT'].'/images/'.$dir;
 
       $files = scandir($directory);
       $images = array_diff($files, array('.', '..')); // Exclude '.' and '..'
+      
         $imgs=[];
       foreach($images as $image){
         array_push($imgs,'/images/'.$dir.'/'.$image);
       }
-                
+      
+               
             return count($imgs)-count($paths);
            
     }
