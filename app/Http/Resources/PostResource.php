@@ -17,7 +17,7 @@ class PostResource extends JsonResource
         // $post_description=explode("\r\n",$this->post_description);
         return [
             'id'=>$this->id,
-            'post_title'=>$this->post_title,
+            'post_title'=>$this->title,
             'post_description'=>$this->post_description,
             'address_title'=>$this->address_title,
             'rate'=>$this->rate,
