@@ -72,4 +72,14 @@ class ChatController extends Controller
               event(new MessageSendedEvent($message));
         return response()->json(['message' => 'message sended successfully'], 201);
     }
+    public function mychats() {
+        $user=auth()->user();
+        if ($user->role=='tourGuide') {
+            $chats=Chat::where('tourGuide_id',$user->tourGuide->id)->get();
+            return response()->json(['chats'=>$chats], 200);
+        }elseif ($user->role=='user') {
+            $chats=Chat::where('user_id',$user->id)->get();
+            return response()->json(['chats'=>$chats], 200);
+        }
+    }
 }

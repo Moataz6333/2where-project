@@ -14,6 +14,9 @@ class Plan extends Model
     protected $fillable=[
         'title',
         'description',
+        'company_id',
+        'date',
+        'price',
     ];
     
 
@@ -28,5 +31,9 @@ class Plan extends Model
     public function hotels()
     {
         return $this->belongsToMany(Hotel::class);
+    }
+    public function company()
+    {
+        return $this->belongsToMany(Compainy::class);
     }
 }

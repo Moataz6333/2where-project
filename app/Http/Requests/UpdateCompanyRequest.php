@@ -28,7 +28,7 @@ class UpdateCompanyRequest extends FormRequest
             'description'=>['required','min:2'],
             'phone'=>['required','min:2','max:255'],
             'phone2'=>['required','min:2','max:255'],
-            'email'=>['required','min:2','max:255',Rule::unique('compainies', 'email')->ignore($this->compainy)],
+            'email'=>['required','min:2','max:255',Rule::unique('compainies', 'email')->ignore($this->route('company'))],
             'bank'=>['required','min:2','max:255'],
             'postPhoto'=>['nullable','image'],
             'founder_name'=>['required','min:2','max:255'],

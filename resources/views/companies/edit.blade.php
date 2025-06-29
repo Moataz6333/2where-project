@@ -23,6 +23,7 @@
 
     <form class="mb-3" method="POST" action="{{ route('companies.update',$company->id) }}" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="form-group">
             <label for="name">Company name :</label>
             <input type="text" class="form-control" required value="{{ $company->name }}" name="name" placeholder="Name">
@@ -50,7 +51,7 @@
             </div>
             <div class="col-4">
                 <label for="phone2">Bank IBAN :</label>
-                <input type="text" class="form-control" required name="bank" value="{{ $company->bankIBAN }}" placeholder="2110000000....">
+                <input type="text" class="form-control" required name="bank" value="{{ $company->BankIBAN }}" placeholder="2110000000....">
             </div>
             <div class="form-group col-4">
                 <label for="postPhoto">Update photo</label>

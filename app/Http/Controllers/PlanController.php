@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compainy;
 use Illuminate\Http\Request;
 use App\Models\Place;
 use App\Models\Restaruant;
@@ -26,7 +27,8 @@ class PlanController extends Controller
         $places =Place::all();
         $rests =Restaruant::all();
         $hotels =Hotel::all();
-        return view('plans.create',compact('places','rests','hotels'));
+        $companies =Compainy::all();
+        return view('plans.create',compact('places','rests','hotels','companies'));
     }
 
     /**
@@ -37,6 +39,11 @@ class PlanController extends Controller
         $plan =new Plan();
         $plan->title=$request->title;
         $plan->description=$request->description;
+        $plan->date=$request->date;
+        $plan->price=(double) $request->price;
+        if (!$request->company =='admin') {
+            $plan->company_id=$request->company;
+        }
         $plan->save();
 
        if(!empty($request->places)){

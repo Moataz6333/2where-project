@@ -149,3 +149,4 @@ Route::post('/search',[CitesController::class,'search'] );
 Route::post('create-chat', [ChatController::class,'create' ])->middleware('auth:sanctum');
 Route::get('chat/{uuid}', [ChatController::class,'chat' ])->middleware('auth:sanctum');
 Route::post('sendMessage', [ChatController::class,'sendMessage' ])->middleware('auth:sanctum');
+Route::get('mychats', [ChatController::class,'mychats' ])->middleware('auth:sanctum');
