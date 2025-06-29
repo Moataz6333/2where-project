@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\HotelController;
 use App\Http\Controllers\Api\TourGideController;
 use App\Http\Controllers\Api\AlbumController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\ChatController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -143,3 +144,8 @@ Route::get('auth/google/callback', [UserController::class, 'handleGoogleCallback
 
 // search
 Route::post('/search',[CitesController::class,'search'] );
+
+// chat
+Route::post('create-chat', [ChatController::class,'create' ])->middleware('auth:sanctum');
+Route::get('chat/{uuid}', [ChatController::class,'chat' ])->middleware('auth:sanctum');
+Route::post('sendMessage', [ChatController::class,'sendMessage' ])->middleware('auth:sanctum');

@@ -34,7 +34,7 @@ class PlanResource extends JsonResource
         return [
             'id'=>$this->id,
             'title'=>$this->title,
-            'descrption'=>$this->descrption,
+            'descrption'=>$this->description,
             'places'=>$places,
             'rests'=>$rests,
             'hotels'=>$hotels,

@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use App\Models\User;
 use App\Models\TourGuide;
 use App\Models\Blog;
+use App\Models\Chat;
 use App\Models\Comment;
 
 class AuthServiceProvider extends ServiceProvider
@@ -49,6 +50,14 @@ class AuthServiceProvider extends ServiceProvider
             });
         Gate::define('OwnComment',function (User $user, Comment $comment) {
                 return $user->id === $comment->user_id;
+            });
+        Gate::define('ChatOwners',function (User $user, Chat $chat) {
+                if ($user->role=='user') {
+                        return $chat->user_id === $user->id;
+                } else  if ($user->role=='tourGuide'){
+                         return $chat->tourGuide_id === $user->tourGuide->id;
+                }
+                
             });
     }
 }
