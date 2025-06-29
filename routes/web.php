@@ -7,6 +7,7 @@ use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TraditionsController;
 use App\Http\Controllers\AccessabilityController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\SaftyController;
 use App\Http\Controllers\RestaruantController;
 use App\Http\Controllers\HotelController;
@@ -152,7 +153,8 @@ Route::delete('/hotels/destroy/{rest}',[HotelController::class,'destroy'])->name
     Route::delete('tour-guides/destroy/{id}', [TourGideController::class,'destroy'])->name('tourGuide.destroy');
 
 
-
+    // companies
+    Route::resource('companies', CompanyController::class);
     
 });
 

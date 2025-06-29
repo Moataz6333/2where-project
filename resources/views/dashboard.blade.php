@@ -18,6 +18,7 @@
     </div>
     <div class="d-flex justify-content-around mt-5" style="flex-wrap: wrap; gap:20px; ">
         <a href="{{route('tourGuide.index')}}" style="width: 10rem;" class="btn btn-primary">Tour-Guides({{$tourGuides}})</a>
+        <a href="{{route('companies.index')}}" style="width: 10rem;" class="btn btn-secondary">Companies</a>
        
     </div>
   

@@ -16,6 +16,7 @@ class Photo extends Model
         'hotel_id',
         'user_id',
         'album_id',
+        'company_id',
         'path',
         'type',
         'url',
