@@ -6,6 +6,7 @@ use App\Events\MessageSendedEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateChatRequest;
 use App\Http\Requests\SendMessageRequest;
+use App\Http\Resources\ChatResource;
 use App\Http\Resources\MessageResource;
 use App\Models\Chat;
 use App\Models\Message;
@@ -76,10 +77,10 @@ class ChatController extends Controller
         $user=auth()->user();
         if ($user->role=='tourGuide') {
             $chats=Chat::where('tourGuide_id',$user->tourGuide->id)->get();
-            return response()->json(['chats'=>$chats], 200);
+            return response()->json(['chats'=>ChatResource::collection($chats)], 200);
         }elseif ($user->role=='user') {
             $chats=Chat::where('user_id',$user->id)->get();
-            return response()->json(['chats'=>$chats], 200);
+            return response()->json(['chats'=>ChatResource::collection($chats)], 200);
         }
     }
 }
