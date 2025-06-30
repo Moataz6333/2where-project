@@ -23,4 +23,7 @@ class Hotel extends Model
     public function post(){
         return $this->hasMany(Photo::class);
     }
+     public function rating()  {
+        return $this->hasOne(Rating::class);
+    }
 }

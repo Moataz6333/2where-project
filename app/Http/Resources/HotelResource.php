@@ -28,7 +28,7 @@ class HotelResource extends JsonResource
             'features'=>explode('  ',$this->features),
             // 'features'=>$this->features,
             'price'=>$this->price,
-            'rate'=>$this->rate,
+            'rate'=>$this->rating ? $this->rating->ave : $this->rate,
             'link'=>$this->link,
             'postPhoto'=>url($postPhoto->path),
             'photos'=>$photos,

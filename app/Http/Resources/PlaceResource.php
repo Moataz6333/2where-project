@@ -45,7 +45,7 @@ class PlaceResource extends JsonResource
             'description'=>$this->body,
             'address_title'=>$this->address_title,
             'address_details'=>$this->address_details,
-            'rate'=>$this->rate,
+            'rate'=>$this->rating ? $this->rating->ave : $this->rate,
             'features'=>$features,
             'timeTables'=>$timeTables,
             'accessabilities'=>$accessabilities,

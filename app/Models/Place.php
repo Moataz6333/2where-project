@@ -36,5 +36,8 @@ class Place extends Model
     public function accessability(){
         return $this->hasOne(Accessability::class);
     }
+    public function rating()  {
+        return $this->hasOne(Rating::class);
+    }
     
 }

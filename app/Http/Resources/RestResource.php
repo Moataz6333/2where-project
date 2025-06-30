@@ -31,7 +31,7 @@ class RestResource extends JsonResource
             'address'=>$this->address,
             'features'=>explode(' ',$this->categories),
             'price'=>$this->price,
-            'rate'=>$this->rate,
+             'rate'=>$this->rating ? $this->rating->ave : $this->rate,
             'postPhoto'=>url($postPhoto->path),
             'photos'=>$photos,
             'menu'=>$menu,

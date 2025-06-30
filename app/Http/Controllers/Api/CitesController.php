@@ -62,7 +62,7 @@ class CitesController extends Controller
     }
     public function rest($id){
             // Auth
-        return response(new RestResource(Restaruant::findOrFailOrFail($id)),200,[]);
+        return response(new RestResource(Restaruant::findOrFail($id)),200,[]);
     }
     public function hotels(){
         $hotels=HotelResource::collection(Hotel::all());
@@ -70,7 +70,7 @@ class CitesController extends Controller
     }
     public function hotel($id){
 
-        return response(new HotelResource(Hotel::findOrFailOrFail($id)),200,[]);
+        return response(new HotelResource(Hotel::findOrFail($id)),200,[]);
     }
     public function plans(){
         $plans =PlanResource::collection(Plan::all());

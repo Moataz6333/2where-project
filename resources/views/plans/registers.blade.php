@@ -157,4 +157,4 @@
         }
     </script>
 @endsection
-        {{-- "mpdf/mpdf": "^8.2", --}}
+{{-- "mpdf/mpdf": "^8.2", --}}

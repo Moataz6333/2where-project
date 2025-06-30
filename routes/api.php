@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\AlbumController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\PlanController;
+use App\Http\Controllers\Api\RatingController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -156,3 +157,5 @@ Route::get('/plan/{id}',[CitesController::class,'plan']);
 Route::get('/company/{id}',[CitesController::class,'company']);
 
 Route::post('/register/{id}',[PlanController::class, 'register'])->middleware('auth:sanctum');
+
+Route::post('/rate',[RatingController::class, 'rate']);

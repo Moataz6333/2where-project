@@ -39,4 +39,7 @@ class Plan extends Model
     public function registers()  {
         return $this->hasMany(Registeration::class);
     }
+     public function rating()  {
+        return $this->hasOne(Rating::class);
+    }
 }

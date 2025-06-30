@@ -41,6 +41,7 @@ class PlanResource extends JsonResource
             ],
             'date'=>$this->date ?  date_create($this->date )->format('d-m-Y  h:i a') : '' ,
             'price'=>$this->price .' EGP',
+             'rate'=>$this->rating ? $this->rating->ave : 1,
             'places'=>$places,
             'rests'=>$rests,
             'hotels'=>$hotels,
