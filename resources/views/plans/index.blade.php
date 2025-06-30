@@ -20,11 +20,12 @@
 <div class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">{{$plan->title}}</h5>
-      <p class="card-text">{{$plan->description}} </p>
-      <p class="text-muted">places: (<span class="badge badge-light">{{count($plan->places)}} </span>) , restaruants: (<span class="badge badge-light">{{count($plan->restaruants)}} </span>) , hotels: (<span class="badge badge-light">{{count($plan->hotels)}} </span>)</p>
+      <p class="card-text">{{ \Illuminate\Support\Str::limit($plan->description, 80,'...') }} </p>
+      <p class="text-muted">places: (<span class="badge text-primary">{{count($plan->places)}} </span>) , restaruants: (<span class="badge text-primary">{{count($plan->restaruants)}} </span>) , hotels: (<span class="badge text-primary">{{count($plan->hotels)}} </span>)</p>
       <a href="{{route('plans.show',$plan->id)}}" class="btn btn-primary">show</a>
       <a href="{{route('plans.edit',$plan->id)}}" class="btn btn-info"> update</a>
-      <form action="{{route('plans.destroy',$plan->id)}}" method="POST" class="d-inline-block" onsubmit="return confirmDelete()">
+      <a href="{{route('plan.registers',$plan->id)}}" class="btn btn-success"> registers</a>
+      <form action="{{route('plans.destroy',$plan->id)}}" method="POST" class="mt-2 d-inline-block" onsubmit="return confirmDelete()">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger">Delete</button>

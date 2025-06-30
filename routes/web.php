@@ -115,6 +115,7 @@ Route::delete('/hotels/destroy/{rest}',[HotelController::class,'destroy'])->name
     //plans
 
     Route::resource('/plans',PlanController::class);
+    Route::get('registers/{planId}', [PlanController::class,'registers'])->name('plan.registers');
 
     //api view
     Route::view('/api-view','api.index')->name('api.view');
@@ -159,3 +160,6 @@ Route::delete('/hotels/destroy/{rest}',[HotelController::class,'destroy'])->name
 });
 
 Route::view('test', 'test');
+
+Route::get('/sheet/{paymentId}', [PlanController::class, 'sheet'])->name('plans.sheet');
+Route::get('/sheet/download/{paymentId}', [PlanController::class, 'download'])->name('sheet.download');

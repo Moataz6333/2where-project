@@ -8,6 +8,10 @@ use App\Models\Place;
 use App\Models\Restaruant;
 use App\Models\Hotel;
 use App\Models\Plan;
+use App\Models\Transaction;
+use Mpdf\Mpdf;
+use Illuminate\Support\Facades\View;
+
 class PlanController extends Controller
 {
     /**
@@ -41,7 +45,7 @@ class PlanController extends Controller
         $plan->description=$request->description;
         $plan->date=$request->date;
         $plan->price=(double) $request->price;
-        if (!$request->company =='admin') {
+        if ($request->company != 'admin') {
             $plan->company_id=$request->company;
         }
         $plan->save();
@@ -124,5 +128,41 @@ class PlanController extends Controller
         $plan =Plan::find($id);
         $plan->delete();
         return redirect()->back()->with('success','plan deleted successfully!');
+    }
+
+    public function sheet($paymentId)  {
+        $transaction = Transaction::where('InvoiceId', $paymentId)->first();
+        if ($transaction) {
+            return view('sheet', compact('transaction'));
+        } else {
+            abort(404);
+        }
+    }
+    public function download($paymentId) {
+        $transaction = Transaction::where('PaymentId', $paymentId)->first();
+        if ($transaction) {
+            
+            $html = View::make('download', compact('transaction'))->render();
+            // return view('download',compact('transaction'));
+            $mpdf = new Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A4',
+                'default_font' => 'dejavusans', // Arabic font
+                'default_font_size' => 12,
+                'autoScriptToLang' => true,
+                'autoLangToFont' => true,
+            ]);
+    
+            $mpdf->WriteHTML($html);
+            return response($mpdf->Output("invoice $transaction->PaymentId.pdf", 'D'))
+            ->header('Content-Type', 'application/pdf');
+
+        } else {
+            abort(404);
+        }
+    }
+    public function registers($planId) {
+        $plan=Plan::findOrFail($planId)->load(['registers']);
+        dd($plan->registers);
     }
 }

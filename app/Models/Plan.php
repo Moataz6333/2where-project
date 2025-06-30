@@ -34,6 +34,9 @@ class Plan extends Model
     }
     public function company()
     {
-        return $this->belongsToMany(Compainy::class);
+        return $this->belongsTo(Compainy::class,'company_id');
+    }
+    public function registers()  {
+        return $this->hasMany(Registeration::class);
     }
 }

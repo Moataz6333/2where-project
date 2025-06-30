@@ -35,10 +35,15 @@ class PlanResource extends JsonResource
             'id'=>$this->id,
             'title'=>$this->title,
             'descrption'=>$this->description,
+            'company'=>[
+                'id'=>$this->company->id,
+                'name'=>$this->company->name,
+            ],
+            'date'=>$this->date ?  date_create($this->date )->format('d-m-Y  h:i a') : '' ,
+            'price'=>$this->price .' EGP',
             'places'=>$places,
             'rests'=>$rests,
             'hotels'=>$hotels,
-
         ];
     }
 }

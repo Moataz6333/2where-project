@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\CityResource;
+use App\Http\Resources\CompanyResource;
 use App\Http\Resources\SaftyResource;
 use App\Http\Resources\PlaceResource;
 use App\Http\Resources\PostResource;
@@ -12,6 +13,7 @@ use App\Http\Resources\RestResource;
 use App\Http\Resources\HotelResource;
 use App\Http\Resources\PlanResource;
 use App\Models\City;
+use App\Models\Compainy;
 use App\Models\Place;
 use App\Models\Restaruant;
 use App\Models\Hotel;
@@ -23,29 +25,29 @@ class CitesController extends Controller
         return response($cities,200,[]);
     }
     public function show($id){
-        $city=new CityResource(City::find($id));
+        $city=new CityResource(City::findOrFail($id));
         return response($city,200,[]);
     }
     public function safty($id){
-        $city=City::find($id);
+        $city=City::findOrFail($id);
         $safty=$city->safty;
         $keys=SaftyResource::collection($city->SaftyKeys);
         $data=['safty_description'=>$safty,'keys'=>$keys];
         return response($data,200,['the safty of alex']);
     }
     public function places($id){
-       $places =PlaceResource::collection(City::find($id)->places);
+       $places =PlaceResource::collection(City::findOrFail($id)->places);
         return response($places,200,[]);
         
     }
     public function place_post($id){
-        $places =PostResource::collection(City::find($id)->places);
+        $places =PostResource::collection(City::findOrFail($id)->places);
         return response($places,200);
 
     }
 
     public function place($id){
-        return response(new PlaceResource(Place::find($id)),200,[]);
+        return response(new PlaceResource(Place::findOrFail($id)),200,[]);
     }
     public function posts(){
         $posts =PostResource::collection(Place::all());
@@ -60,7 +62,7 @@ class CitesController extends Controller
     }
     public function rest($id){
             // Auth
-        return response(new RestResource(Restaruant::findOrFail($id)),200,[]);
+        return response(new RestResource(Restaruant::findOrFailOrFail($id)),200,[]);
     }
     public function hotels(){
         $hotels=HotelResource::collection(Hotel::all());
@@ -68,7 +70,7 @@ class CitesController extends Controller
     }
     public function hotel($id){
 
-        return response(new HotelResource(Hotel::findOrFail($id)),200,[]);
+        return response(new HotelResource(Hotel::findOrFailOrFail($id)),200,[]);
     }
     public function plans(){
         $plans =PlanResource::collection(Plan::all());
@@ -76,8 +78,7 @@ class CitesController extends Controller
     }
 
     public function plan($id){
-        return response(new PlanResource(Plan::find($id)),200,[]);
-
+        return response(new PlanResource(Plan::findOrFail($id)),200,[]);
     }
 
     //about
@@ -138,7 +139,10 @@ class CitesController extends Controller
         
     }
         
-    
+    public function company($id) {
+        $company=Compainy::findOrFail($id)->load('founder');
+        return response()->json(['company'=>CompanyResource::make($company)], 200);
+    }
 
     
 
