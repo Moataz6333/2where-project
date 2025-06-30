@@ -9,8 +9,10 @@ use App\Models\Restaruant;
 use App\Models\Hotel;
 use App\Models\Plan;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Mpdf\Mpdf;
 use Illuminate\Support\Facades\View;
+use Resend\Laravel\Facades\Resend;
 
 class PlanController extends Controller
 {
@@ -19,8 +21,8 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans =Plan::all();
-        return view('plans.index',compact('plans'));
+        $plans = Plan::all();
+        return view('plans.index', compact('plans'));
     }
 
     /**
@@ -28,11 +30,11 @@ class PlanController extends Controller
      */
     public function create()
     {
-        $places =Place::all();
-        $rests =Restaruant::all();
-        $hotels =Hotel::all();
-        $companies =Compainy::all();
-        return view('plans.create',compact('places','rests','hotels','companies'));
+        $places = Place::all();
+        $rests = Restaruant::all();
+        $hotels = Hotel::all();
+        $companies = Compainy::all();
+        return view('plans.create', compact('places', 'rests', 'hotels', 'companies'));
     }
 
     /**
@@ -40,61 +42,61 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        $plan =new Plan();
-        $plan->title=$request->title;
-        $plan->description=$request->description;
-        $plan->date=$request->date;
-        $plan->price=(double) $request->price;
+        $plan = new Plan();
+        $plan->title = $request->title;
+        $plan->description = $request->description;
+        $plan->date = $request->date;
+        $plan->price = (float) $request->price;
         if ($request->company != 'admin') {
-            $plan->company_id=$request->company;
+            $plan->company_id = $request->company;
         }
         $plan->save();
 
-       if(!empty($request->places)){
+        if (!empty($request->places)) {
             $plan->places()->sync($request->places);
-       }
-       if(!empty($request->hotels)){
+        }
+        if (!empty($request->hotels)) {
             $plan->hotels()->sync($request->hotels);
-       }
-       if(!empty($request->rests)){
+        }
+        if (!empty($request->rests)) {
             $plan->restaruants()->sync($request->rests);
-       }
-       return redirect()->back()->with('success','plan created successfully!');
+        }
+        return redirect()->back()->with('success', 'plan created successfully!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show( $id)
+    public function show($id)
     {
-        $plan=Plan::find($id);
-        return view('plans.show',compact('plan'));
+        $plan = Plan::find($id);
+        return view('plans.show', compact('plan'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( $id)
+    public function edit($id)
     {
-      
-        $plan =Plan::find($id);
-        $plan_places=[];
-        foreach($plan->places as $place){
-            array_push($plan_places,$place->id);
+
+        $plan = Plan::find($id);
+        $plan_places = [];
+        foreach ($plan->places as $place) {
+            array_push($plan_places, $place->id);
         }
-        $plan_rests=[];
-        foreach($plan->restaruants as $rest){
-            array_push($plan_rests,$rest->id);
+        $plan_rests = [];
+        foreach ($plan->restaruants as $rest) {
+            array_push($plan_rests, $rest->id);
         }
-        $plan_hotels=[];
-        foreach($plan->hotels as $hotel){
-            array_push($plan_hotels,$hotel->id);
+        $plan_hotels = [];
+        foreach ($plan->hotels as $hotel) {
+            array_push($plan_hotels, $hotel->id);
         }
-        $places =Place::all();
-        $rests=Restaruant::all();
-        $hotels=Hotel::all();
-       
-        return view('plans.edit',compact('plan','places','rests','hotels','plan_places','plan_rests','plan_hotels'));
+        $places = Place::all();
+        $rests = Restaruant::all();
+        $hotels = Hotel::all();
+
+        return view('plans.edit', compact('plan', 'places', 'rests', 'hotels', 'plan_places', 'plan_rests', 'plan_hotels'));
     }
 
     /**
@@ -102,22 +104,22 @@ class PlanController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $plan =Plan::find($id);
-        $plan->title=$request->title;
-        $plan->description=$request->description;
-        
+        $plan = Plan::find($id);
+        $plan->title = $request->title;
+        $plan->description = $request->description;
 
-       if(!empty($request->places)){
+
+        if (!empty($request->places)) {
             $plan->places()->sync($request->places);
-       }
-       if(!empty($request->hotels)){
+        }
+        if (!empty($request->hotels)) {
             $plan->hotels()->sync($request->hotels);
-       }
-       if(!empty($request->rests)){
+        }
+        if (!empty($request->rests)) {
             $plan->restaruants()->sync($request->rests);
         }
         $plan->save();
-       return redirect()->back()->with('success','plan updated successfully!');
+        return redirect()->back()->with('success', 'plan updated successfully!');
     }
 
     /**
@@ -125,12 +127,13 @@ class PlanController extends Controller
      */
     public function destroy(string $id)
     {
-        $plan =Plan::find($id);
+        $plan = Plan::find($id);
         $plan->delete();
-        return redirect()->back()->with('success','plan deleted successfully!');
+        return redirect()->back()->with('success', 'plan deleted successfully!');
     }
 
-    public function sheet($paymentId)  {
+    public function sheet($paymentId)
+    {
         $transaction = Transaction::where('InvoiceId', $paymentId)->first();
         if ($transaction) {
             return view('sheet', compact('transaction'));
@@ -138,10 +141,11 @@ class PlanController extends Controller
             abort(404);
         }
     }
-    public function download($paymentId) {
+    public function download($paymentId)
+    {
         $transaction = Transaction::where('PaymentId', $paymentId)->first();
         if ($transaction) {
-            
+
             $html = View::make('download', compact('transaction'))->render();
             // return view('download',compact('transaction'));
             $mpdf = new Mpdf([
@@ -152,17 +156,33 @@ class PlanController extends Controller
                 'autoScriptToLang' => true,
                 'autoLangToFont' => true,
             ]);
-    
+
             $mpdf->WriteHTML($html);
             return response($mpdf->Output("invoice $transaction->PaymentId.pdf", 'D'))
-            ->header('Content-Type', 'application/pdf');
-
+                ->header('Content-Type', 'application/pdf');
         } else {
             abort(404);
         }
     }
-    public function registers($planId) {
-        $plan=Plan::findOrFail($planId)->load(['registers']);
-        dd($plan->registers);
+    public function registers($planId)
+    {
+        $plan = Plan::findOrFail($planId)->load(['registers']);
+        $futureDate = Carbon::parse($plan->date); // or from DB: $model->deadline
+        $today = Carbon::today();
+
+        $daysLeft = $today->diffInDays($futureDate, false);
+        return view('plans.registers', compact('plan','daysLeft'));
+    }
+    public function sendToCompany($planId) {
+        
+        $plan=Plan::findOrFail($planId)->load('registers');
+         $html=view('plans.email',['users'=>$plan->registers])->render();
+        Resend::emails()->send([
+            'from' => 'Acme <onboarding@resend.dev>',
+            'to' => ['moatazahmedghander2003@gmail.com'],
+            'subject' => '2Where Team',
+            'html' => $html,
+        ]);
+        return redirect()->back()->with('success','company received email successfully!');
     }
 }

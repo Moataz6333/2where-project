@@ -116,6 +116,7 @@ Route::delete('/hotels/destroy/{rest}',[HotelController::class,'destroy'])->name
 
     Route::resource('/plans',PlanController::class);
     Route::get('registers/{planId}', [PlanController::class,'registers'])->name('plan.registers');
+    Route::get('/send/company/{planId}', [PlanController::class,'sendToCompany'])->name('sendToCompany');
 
     //api view
     Route::view('/api-view','api.index')->name('api.view');

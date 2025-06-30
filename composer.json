@@ -11,7 +11,6 @@
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.18",
         "laravel/tinker": "^2.8",
-        "mpdf/mpdf": "^8.2",
         "myfatoorah/laravel-package": "^2.2",
         "pusher/pusher-php-server": "^7.2",
         "resend/resend-laravel": "^0.14.0"
