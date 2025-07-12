@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\RestResource;
 use App\Http\Resources\HotelResource;
 use Laravel\Socialite\Facades\Socialite;
-
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -303,6 +303,7 @@ public function login()
          ], 404);
     }
     // google
+     // google
     public function redirectToGoogle()
     {
         return response()->json([
@@ -320,18 +321,25 @@ public function login()
                 [
                     'name' => $googleUser->getName(),
                     'google_id' => $googleUser->getId(),
-                    'password' => bcrypt(Str::random(16)), // Random password
+                    'password' => Hash::make(Str::random(8)), // Random password
+                    'role' => 'user',
+                    'gender' => 'male'
                 ]
             );
+             
 
             // Generate token (if using Sanctum or Passport)
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return redirect()->to("http://localhost:3000/auth/callback?token=$token");
-
+            return response()->json([
+                    'message' => 'User is registered in successfully!',
+                    'user' => $user,
+                    'token' => $token
+                ], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Authentication failed', 'message' => $e->getMessage()], 500);
         }
     }
+
 
 }
