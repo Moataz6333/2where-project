@@ -20,7 +20,7 @@ class BlogPublicResource extends JsonResource
         $tourGuide =$this->tourGuide;
         $tourGuide_photo="";
         if($tourGuide->user->photo->where('type','profile')->first()){
-            $tourGuide_photo =url($this->user->photo->where('type','profile')->first()->path);
+            $tourGuide_photo =url($tourGuide->user->photo->where('type','profile')->first()->path);
         }
 
 

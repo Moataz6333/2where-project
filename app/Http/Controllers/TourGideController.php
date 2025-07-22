@@ -10,7 +10,6 @@ use App\Models\User;
 class TourGideController extends Controller
 {
     public function index(){
-
         $tourGuides=TourGuide::where('accepted',false)->get();
         return view('tourGuide.index',['tourGuides'=>$tourGuides]);
     }
